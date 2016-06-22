@@ -9,15 +9,20 @@
 import Foundation
 import UIKit
 
-class LogInViewController: UIViewController {
-    @IBOutlet weak var emailText: UITextField!
-    
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var passwordText: UITextField!
-    
-    @IBOutlet weak var passwordLabel: UILabel!
+class LogInViewController: UIViewController, UITextFieldDelegate {
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
-
+    
+    let mapTextDelegate = MapsTextFieldDelegate()
+    
+    let mapsTextAttributes = [
+        NSForegroundColorAttributeName : UIColor.whiteColor(),
+        NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 17)!,
+        ]
+    
+    
+    // MARK - Actions
     @IBAction func logInAction(sender: UIButton) {
     }
 }

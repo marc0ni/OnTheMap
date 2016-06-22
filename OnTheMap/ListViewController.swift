@@ -16,14 +16,13 @@ protocol PushViewControllerDelegate: class {
 class ListViewController: UITableViewController {
     weak var delegate: PushViewControllerDelegate?
     
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
-    
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
     @IBOutlet weak var addPinButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
    
     //MARK - Actions
-    @IBAction func cancelAction(sender: AnyObject) {
+    @IBAction func logoutAction(sender: AnyObject) {
     }
     
     @IBAction func addPinAction(sender: AnyObject) {

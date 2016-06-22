@@ -10,11 +10,12 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
     @IBOutlet weak var addPinButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
     weak var delegate: PushViewControllerDelegate?
+    
     
     // The map. See the setup in the Storyboard file. Note particularly that the view controller
     // is set up as the map view's delegate.
@@ -164,7 +165,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     //MARK - Actions
-    @IBAction func cancelAction(sender: AnyObject) {
+    @IBAction func logoutAction(sender: AnyObject) {
     }
     
     @IBAction func addPinAction(sender: UIBarButtonItem) {
