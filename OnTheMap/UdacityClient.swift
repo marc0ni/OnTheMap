@@ -17,13 +17,6 @@ class UdacityClient : NSObject {
     // shared session
     var session = NSURLSession.sharedSession()
     
-    // configuration object
-    var config = UdacityConfig()
-    
-    // authentication state
-    var requestToken: String? = nil
-    var sessionID: String? = nil
-    var userID: Int? = nil
     
     // MARK: Initializers
     
@@ -33,116 +26,67 @@ class UdacityClient : NSObject {
     
     // MARK: GET
     
-    func taskForGETMethod(method: String, parameters: [String:AnyObject], completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGETPublicUserData (method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        /* 1. Set the parameters */
-        var parametersWithApiKey = parameters
-        parametersWithApiKey[ParameterKeys.ApiKey] = Constants.ApiKey
-        
-        /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(URL: UdacityURLFromParameters(parametersWithApiKey, withPathExtension: method))
-        
-        /* 4. Make the request */
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            
-            func sendError(error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForGET(result: nil, error: NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
-            }
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/3903878747")!)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if error != nil {
+                
+                func sendError(error: String) {
+                    print(error)
+                    let userInfo = [NSLocalizedDescriptionKey : error]
+                    completionHandlerForGET(result: nil, error: NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                }
+                
+                /* GUARD: Was there an error? */
+                guard (error == nil) else {
+                    sendError("There was an error with your request: \(error)")
+                    return
+                }
+                
+                /* GUARD: Did we get a successful 2XX response? */
+                guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode
+                    >= 200 && statusCode <= 299 else {
+                        sendError("Your request returned a status code other than 2xx!")
+                        return
+                }
+                
+                /* GUARD: Was there any data returned? */
+                guard let data = data else {
+                    sendError("No data was returned by the request!")
+                    return
+                }
+
                 return
             }
-            
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
+            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
+            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
         }
-        
-        /* 7. Start the request */
         task.resume()
         
         return task
     }
-    
-    func taskForGETImage(size: String, filePath: String, completionHandlerForImage: (imageData: NSData?, error: NSError?) -> Void) -> NSURLSessionTask {
-        
-        /* 1. Set the parameters */
-        // There are none...
-        
-        /* 2/3. Build the URL and configure the request */
-        let baseURL = NSURL(string: config.baseImageURLString)!
-        let url = baseURL.URLByAppendingPathComponent(size).URLByAppendingPathComponent(filePath)
-        let request = NSURLRequest(URL: url)
-        
-        /* 4. Make the request */
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            
-            func sendError(error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForImage(imageData: nil, error: NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
-            }
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
-                return
-            }
-            
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
-            completionHandlerForImage(imageData: data, error: nil)
-        }
-        
-        /* 7. Start the request */
-        task.resume()
-        
-        return task
-    }
+
     
     // MARK: POST
     
     func taskForPOSTMethod(method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
-        var parametersWithApiKey = parameters
-        parametersWithApiKey[ParameterKeys.ApiKey] = Constants.ApiKey
+        /*var parametersWithApiKey = parameters
+        parametersWithApiKey[ParameterKeys.ApiKey] = APIConstants.ApiKey*/
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(URL: UdacityURLFromParameters(parametersWithApiKey, withPathExtension: method))
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = "{\"udacity\": {\"username\": \"account@domain.com\", \"password\": \"********\"}}".dataUsingEncoding(NSUTF8StringEncoding)
         
         /* 4. Make the request */
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
             
             func sendError(error: String) {
                 print(error)
@@ -157,9 +101,10 @@ class UdacityClient : NSObject {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                return
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode
+                >= 200 && statusCode <= 299 else {
+                    sendError("Your request returned a status code other than 2xx!")
+                    return
             }
             
             /* GUARD: Was there any data returned? */
@@ -167,9 +112,9 @@ class UdacityClient : NSObject {
                 sendError("No data was returned by the request!")
                 return
             }
-            
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
+            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
         }
         
         /* 7. Start the request */
@@ -178,54 +123,35 @@ class UdacityClient : NSObject {
         return task
     }
     
-    // MARK: Helpers
+    // MARK: Logout
     
-    // substitute the key for the value that is contained within the method name
-    func subtituteKeyInMethod(method: String, key: String, value: String) -> String? {
-        if method.rangeOfString("{\(key)}") != nil {
-            return method.stringByReplacingOccurrencesOfString("{\(key)}", withString: value)
-        } else {
-            return nil
+    func taskForDELETEMethod(method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        request.HTTPMethod = "DELETE"
+        var xsrfCookie: NSHTTPCookie? = nil
+        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
         }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if error != nil { // Handle error…
+                return
+            }
+            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
+            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+        }
+        task.resume()
+        
+        return task
+        
     }
     
-    // given raw JSON, return a usable Foundation object
-    private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
-        
-        var parsedResult: AnyObject!
-        do {
-            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-        } catch {
-            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
-        }
-        
-        completionHandlerForConvertData(result: parsedResult, error: nil)
-    }
     
-    // create a URL from parameters
-    private func UdacityURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
-        
-        let components = NSURLComponents()
-        components.scheme = UdacityClient.Constants.ApiScheme
-        components.host = UdacityClient.Constants.ApiHost
-        components.path = UdacityClient.Constants.ApiPath + (withPathExtension ?? "")
-        components.queryItems = [NSURLQueryItem]()
-        
-        for (key, value) in parameters {
-            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
-            components.queryItems!.append(queryItem)
-        }
-        
-        return components.URL!
-    }
     
-    // MARK: Shared Instance
     
-    class func sharedInstance() -> UdacityClient {
-        struct Singleton {
-            static var sharedInstance = UdacityClient()
-        }
-        return Singleton.sharedInstance
-    }
 }

@@ -14,15 +14,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
     
-    let mapTextDelegate = MapsTextFieldDelegate()
-    
-    let mapsTextAttributes = [
-        NSForegroundColorAttributeName : UIColor.whiteColor(),
-        NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 17)!,
-        ]
-    
-    
-    // MARK - Actions
+       // MARK - Actions
     @IBAction func logInAction(sender: UIButton) {
     }
 }

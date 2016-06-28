@@ -120,11 +120,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="emailText" destination="6CP-j1-BuX" id="wkV-70-AEQ"/>
                         <outlet property="emailTextField" destination="6CP-j1-BuX" id="G6Y-Vl-UPI"/>
                         <outlet property="logInButton" destination="cbT-pz-Wov" id="78L-TI-vzT"/>
-                        <outlet property="password" destination="ZqT-nv-lFG" id="pPF-xH-97N"/>
-                        <outlet property="passwordText" destination="ZqT-nv-lFG" id="NVi-ku-35C"/>
                         <outlet property="passwordTextField" destination="ZqT-nv-lFG" id="tZh-YD-hQ8"/>
                         <outlet property="userName" destination="6CP-j1-BuX" id="L9h-jy-0eU"/>
                         <segue destination="mst-Bb-4CH" kind="show" identifier="segueToTabs" id="tTb-kD-YmT"/>
@@ -137,7 +134,6 @@
         <!--Map-->
         <scene sceneID="zDm-eZ-2RT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8v8-XD-dhC" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="4Ql-20-yXw" customClass="MapViewController" customModule="OnTheMap" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SXC-xV-MQF"/>
@@ -197,6 +193,7 @@
                         <outlet property="reloadButton" destination="XOn-Jx-hFF" id="7js-bW-ltZ"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8v8-XD-dhC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="276" y="710"/>
         </scene>

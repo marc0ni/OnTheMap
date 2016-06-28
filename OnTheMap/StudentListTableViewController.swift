@@ -1,5 +1,5 @@
 //
-//  ListViewController.swift
+//  StudentListTableViewController.swift
 //  OnTheMap
 //
 //  Created by Mark Lindamood on 6/21/16.
@@ -13,7 +13,7 @@ protocol PushViewControllerDelegate: class {
     func pushViewController(vc: UIViewController)
 }
 
-class ListViewController: UITableViewController {
+class StudentListTableViewController: UITableViewController {
     weak var delegate: PushViewControllerDelegate?
     
     @IBOutlet weak var logoutButton: UIBarButtonItem!
@@ -26,8 +26,8 @@ class ListViewController: UITableViewController {
     }
     
     @IBAction func addPinAction(sender: AnyObject) {
-        let annotationVC = self.storyboard?.instantiateViewControllerWithIdentifier("AnnotationViewController") as! AnnotationViewController!
-        self.delegate?.pushViewController(annotationVC)
+        let listVC = self.storyboard?.instantiateViewControllerWithIdentifier("StudentListTableViewController") as! StudentListTableViewController!
+        self.delegate?.pushViewController(listVC)
     }
     
     

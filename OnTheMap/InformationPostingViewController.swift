@@ -1,5 +1,5 @@
 //
-//  AnnotationViewController.swift
+//  InformationPostingViewController.swift
 //  OnTheMap
 //
 //  Created by Mark Lindamood on 6/21/16.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class AnnotationViewController: UIViewController, UITextFieldDelegate {
+class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var urlTextField: UITextField!
