@@ -53,7 +53,7 @@ class UdacityClient : NSObject {
                 }
                 
                 /* GUARD: Was there any data returned? */
-                guard let data = data else {
+                guard data != nil else {
                     sendError("No data was returned by the request!")
                     return
                 }
@@ -71,11 +71,12 @@ class UdacityClient : NSObject {
     
     // MARK: POST
     
-    func taskForPOSTMethod(method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForPOSTaSession(method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOSTaSession: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
-        /*var parametersWithApiKey = parameters
-        parametersWithApiKey[ParameterKeys.ApiKey] = APIConstants.ApiKey*/
+        let methodParameters = [
+            UdacityClient.Properties.username: UdacityConstants.JSONResponseKeys.username,
+            UdacityClient.Properties.password: UdacityConstants.JSONResponseKeys.password]
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
@@ -91,7 +92,7 @@ class UdacityClient : NSObject {
             func sendError(error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(result: nil, error: NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandlerForPOSTaSession(result: nil, error: NSError(domain: "taskForPOSTaSession", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */

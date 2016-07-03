@@ -169,8 +169,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func addPinAction(sender: UIBarButtonItem) {
-        let annotationVC = self.storyboard?.instantiateViewControllerWithIdentifier("AnnotationViewController") as! AnnotationViewController!
-        self.delegate?.pushViewController(annotationVC)
+        let infoVC = self.storyboard?.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController!
+        self.delegate?.pushViewController(infoVC)
     }
     
     @IBAction func refreshAction(sender: AnyObject) {
