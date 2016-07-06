@@ -38,7 +38,10 @@ class LogInViewController: UIViewController {
 
        // MARK - Actions
     @IBAction func logInAction(sender: UIButton) {
-        if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
+        let username = self.emailTextField.text
+        let password = self.passwordTextField.text
+    
+        if username!.characters.count < 1 || password!.characters.count < 1 {
             // create the login alert
             let alert = UIAlertController(title: "Log In Alert", message: "Log in requires username and password", preferredStyle: UIAlertControllerStyle.Alert)
             
@@ -50,8 +53,10 @@ class LogInViewController: UIViewController {
         } else {
             completeLogin()
         }
-}
+    }
     
+
+
     private func completeLogin() {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
             presentViewController(controller, animated: true, completion: nil)
