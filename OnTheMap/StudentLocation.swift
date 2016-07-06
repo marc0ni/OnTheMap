@@ -27,14 +27,14 @@ struct StudentLocation {
     // MARK: Initializers
     
     init(dictionary: [String:AnyObject]) {
-        objectId = dictionary[ParseClient.ResponseKeys.objectId] as! String
-        uniqueKey = dictionary[ParseClient.ResponseKeys.uniqueKey] as! String
-        firstName = dictionary[ParseClient.ResponseKeys.firstName] as! String
-        lastName = dictionary[ParseClient.ResponseKeys.lastName] as! String
-        mediaUrl = dictionary[ParseClient.ResponseKeys.mediaUrl] as! String
-        latitude = dictionary[ParseClient.ResponseKeys.Latitude] as! Double
-        longitude = dictionary[ParseClient.ResponseKeys.Longitude] as! Double
-        mapstring = (dictionary[ParseClient.ResponseKeys.Mapstring] as? String)!
+        objectId = dictionary[ParseClient.JSONResponseKeys.objectId] as! String
+        uniqueKey = dictionary[ParseClient.JSONResponseKeys.uniqueKey] as! String
+        firstName = dictionary[ParseClient.JSONResponseKeys.firstName] as! String
+        lastName = dictionary[ParseClient.JSONResponseKeys.lastName] as! String
+        mediaUrl = dictionary[ParseClient.JSONResponseKeys.mediaUrl] as! String
+        latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as! Double
+        longitude = dictionary[ParseClient.JSONResponseKeys.Longitude] as! Double
+        mapstring = (dictionary[ParseClient.JSONResponseKeys.Mapstring] as? String)!
     }
     
 }

@@ -75,8 +75,8 @@ class UdacityClient : NSObject {
         
         /* 1. Set the parameters */
         let methodParameters = [
-            UdacityClient.Properties.username: UdacityConstants.JSONResponseKeys.username,
-            UdacityClient.Properties.password: UdacityConstants.JSONResponseKeys.password]
+            UdacityClient.JSONResponseKeys.username,
+            UdacityClient.JSONResponseKeys.password]
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)

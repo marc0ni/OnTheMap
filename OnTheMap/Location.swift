@@ -22,9 +22,9 @@ struct Location {
     // MARK: Initializers
     
     init(dictionary: [String:AnyObject]) {
-        latitude = dictionary[ParseClient.ResponseKeys.Latitude] as! Double
-        longitude = dictionary[ParseClient.ResponseKeys.Longitude] as! Double
-        mapstring = dictionary[ParseClient.ResponseKeys.Mapstring] as? String
+        latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as! Double
+        longitude = dictionary[ParseClient.JSONResponseKeys.Longitude] as! Double
+        mapstring = dictionary[ParseClient.JSONResponseKeys.Mapstring] as? String
     }
     
 }

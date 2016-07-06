@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import WebKit
 
 class LogInViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
@@ -15,10 +16,10 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var logInButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     
+    
     // MARK: Properties
     
     var keyboardOnScreen = false
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,6 +129,14 @@ extension LogInViewController: UITextFieldDelegate {
         if textField.isFirstResponder() {
             textField.resignFirstResponder()
         }
+    }
+}
+
+extension NSLayoutConstraint {
+    
+    override public var description: String {
+        let id = identifier ?? ""
+        return "id: \(id), constant: \(constant)" //you may print whatever you want here
     }
 }
 
