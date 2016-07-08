@@ -18,6 +18,8 @@
 		380DC0E01D19DE37003A65FF /* StudentListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380DC0DF1D19DE37003A65FF /* StudentListTableViewController.swift */; };
 		380DC0E51D1B4DA6003A65FF /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380DC0E41D1B4DA6003A65FF /* UdacityClient.swift */; };
 		380DC0EB1D1B4E9E003A65FF /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380DC0EA1D1B4E9E003A65FF /* UdacityConstants.swift */; };
+		38D597C71D2DECB20052A035 /* StudentLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D597C61D2DECB20052A035 /* StudentLocationTableViewCell.swift */; };
+		38D597C91D2EBE420052A035 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D597C81D2EBE420052A035 /* Student.swift */; };
 		38F9C41D1D20636B007BD549 /* APISession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F9C41C1D20636B007BD549 /* APISession.swift */; };
 		38FD92C51D17285E003599B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FD92C41D17285E003599B3 /* AppDelegate.swift */; };
 		38FD92C71D17285E003599B3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FD92C61D17285E003599B3 /* MapViewController.swift */; };
@@ -60,6 +62,8 @@
 		380DC0DF1D19DE37003A65FF /* StudentListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentListTableViewController.swift; sourceTree = "<group>"; };
 		380DC0E41D1B4DA6003A65FF /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		380DC0EA1D1B4E9E003A65FF /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UdacityConstants.swift; path = ../UdacityConstants.swift; sourceTree = "<group>"; };
+		38D597C61D2DECB20052A035 /* StudentLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocationTableViewCell.swift; sourceTree = "<group>"; };
+		38D597C81D2EBE420052A035 /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		38F9C41C1D20636B007BD549 /* APISession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APISession.swift; sourceTree = "<group>"; };
 		38FD92C11D17285E003599B3 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38FD92C41D17285E003599B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +127,7 @@
 				38FD92D31D17285E003599B3 /* Info.plist */,
 				38FD92CB1D17285E003599B3 /* OnTheMap.xcdatamodeld */,
 				38FD92F51D172A5B003599B3 /* GCDBlackBox.swift */,
+				38D597C61D2DECB20052A035 /* StudentLocationTableViewCell.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -141,29 +146,6 @@
 			children = (
 			);
 			name = DataSource;
-			sourceTree = "<group>";
-		};
-		38F9C4191D1D979D007BD549 /* Location */ = {
-			isa = PBXGroup;
-			children = (
-				38021F811D22E8D100863A6E /* Location.swift */,
-			);
-			name = Location;
-			sourceTree = "<group>";
-		};
-		38F9C41A1D1D97D5007BD549 /* Student */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Student;
-			sourceTree = "<group>";
-		};
-		38F9C41B1D1D97ED007BD549 /* StudentLocation */ = {
-			isa = PBXGroup;
-			children = (
-				38021F831D22FA6E00863A6E /* StudentLocation.swift */,
-			);
-			name = StudentLocation;
 			sourceTree = "<group>";
 		};
 		38FD92B81D17285E003599B3 = {
@@ -218,11 +200,11 @@
 			isa = PBXGroup;
 			children = (
 				38021F7C1D20B6EB00863A6E /* API */,
+				38021F811D22E8D100863A6E /* Location.swift */,
 				38FD92F81D172A92003599B3 /* Clients */,
+				38D597C81D2EBE420052A035 /* Student.swift */,
+				38021F831D22FA6E00863A6E /* StudentLocation.swift */,
 				38F9C4181D1D974F007BD549 /* DataSource */,
-				38F9C4191D1D979D007BD549 /* Location */,
-				38F9C41A1D1D97D5007BD549 /* Student */,
-				38F9C41B1D1D97ED007BD549 /* StudentLocation */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -405,6 +387,8 @@
 				38021F7B1D20B68000863A6E /* APIConstants.swift in Sources */,
 				38021F7E1D21A7EF00863A6E /* ParseClient.swift in Sources */,
 				38021F901D2987DE00863A6E /* Login.swift in Sources */,
+				38D597C71D2DECB20052A035 /* StudentLocationTableViewCell.swift in Sources */,
+				38D597C91D2EBE420052A035 /* Student.swift in Sources */,
 				38021F801D21E3B800863A6E /* ParseConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

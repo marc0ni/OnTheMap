@@ -20,10 +20,15 @@ class StudentListTableViewController: UITableViewController {
     @IBOutlet weak var addPinButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
-   
+    
+    
     //MARK - Actions
     @IBAction func logoutAction(sender: AnyObject) {
     }
+   
+    
+    
+    
     
     @IBAction func addPinAction(sender: AnyObject) {
         let listVC = self.storyboard?.instantiateViewControllerWithIdentifier("StudentListTableViewController") as! StudentListTableViewController!

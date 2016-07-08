@@ -32,6 +32,16 @@ extension ParseClient {
         static let ApiKey = "api_key"
     }
     
+    // MARK: Default Values
+    struct DefaultValues {
+        static let ObjectID = "[No Object ID]"
+        static let UniqueKey = "[No Unique Key]"
+        static let FirstName = "[No First Name]"
+        static let LastName = "[No Last Name]"
+        static let MediaURL = "[No Media URL]"
+        static let MapString = "[No Map String]"
+    }
+    
     // MARK: Parameter Values
     struct ParameterValues {
         static let ApplicationKey: String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
@@ -45,7 +55,7 @@ extension ParseClient {
         static let uniqueKey = "UdacityClient.ParameterValues.username"
         static let firstName = "firstName"
         static let lastName = "lastName"
-        static let Mapstring = "mapstring"
+        static let mapString = "mapString"
         static let mediaUrl = "mediaUrl"
         static let Longitude = "longitude"
         static let Latitude = "latitude"

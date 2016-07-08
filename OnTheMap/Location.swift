@@ -6,7 +6,7 @@
 //  Copyright © 2016 udacity. All rights reserved.
 //
 
-import UIKit
+import MapKit
 
 
 // MARK: - Location
@@ -19,12 +19,7 @@ struct Location {
     let longitude: Double
     let mapstring: String?
     
-    // MARK: Initializers
-    
-    init(dictionary: [String:AnyObject]) {
-        latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as! Double
-        longitude = dictionary[ParseClient.JSONResponseKeys.Longitude] as! Double
-        mapstring = dictionary[ParseClient.JSONResponseKeys.Mapstring] as? String
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2DMake(latitude, longitude)
     }
-    
 }
