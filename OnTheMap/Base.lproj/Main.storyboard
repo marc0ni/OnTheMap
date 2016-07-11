@@ -436,7 +436,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="4Ql-20-yXw" kind="relationship" relationship="viewControllers" id="S8N-FE-Iya"/>
-                        <segue destination="rQb-Ks-2eA" kind="show" identifier="" id="v8M-21-m8X"/>
+                        <segue destination="rQb-Ks-2eA" kind="relationship" relationship="viewControllers" id="xkF-PT-MAz"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pjd-nL-0DV" userLabel="First Responder" sceneMemberID="firstResponder"/>
