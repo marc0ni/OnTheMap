@@ -10,9 +10,7 @@ import UIKit
 
 class StudentLocationTableViewCell: UITableViewCell {
     @IBOutlet weak var pinImage: UIImageView!
-    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var urlLabel: UILabel!
-    
-    
 
 }

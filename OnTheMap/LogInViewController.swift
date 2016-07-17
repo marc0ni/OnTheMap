@@ -58,8 +58,9 @@ class LogInViewController: UIViewController {
 
 
     private func completeLogin() {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-            presentViewController(controller, animated: true, completion: nil)
+        /*let controller = storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+            presentViewController(controller, animated: true, completion: nil)*/
+        performSegueWithIdentifier("TabBarSegue", sender: "loginButton")
     }
 
 
