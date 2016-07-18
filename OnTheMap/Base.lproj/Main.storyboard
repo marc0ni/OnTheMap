@@ -36,7 +36,11 @@
                         <barButtonItem key="leftBarButtonItem" image="logout" id="QkI-zR-T0S"/>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="refresh" id="D6R-f3-EL2"/>
-                            <barButtonItem image="pin1_25" id="zdz-pm-t36"/>
+                            <barButtonItem image="pin1_25" id="zdz-pm-t36">
+                                <connections>
+                                    <segue destination="lzA-3i-fWp" kind="show" identifier="showFromMaps" id="ITb-Np-jXs"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -211,49 +215,73 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8vR-jq-SVJ">
-                                <rect key="frame" x="0.0" y="20" width="600" height="594"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4C9-us-veh" userLabel="topView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="101"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3R-OD-ckZ" userLabel="middleView">
+                                <rect key="frame" x="0.0" y="100" width="600" height="456"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZW-cB-eQp" userLabel="bottomView">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Zzb-9b-Teg" userLabel="allStack">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4C9-us-veh" userLabel="topView">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="96"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3R-OD-ckZ" userLabel="middleView">
-                                        <rect key="frame" x="0.0" y="96" width="600" height="444"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZW-cB-eQp" userLabel="bottomView">
-                                        <rect key="frame" x="0.0" y="540" width="600" height="54"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gZ8-aJ-NFx" userLabel="topStack">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="101"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kP4-fj-RYP" userLabel="middleStack">
+                                        <rect key="frame" x="0.0" y="101" width="600" height="456"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YQz-lg-ucO" userLabel="bottomStack">
+                                        <rect key="frame" x="0.0" y="557" width="600" height="43"/>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="KZW-cB-eQp" firstAttribute="centerX" secondItem="8vR-jq-SVJ" secondAttribute="centerX" id="H0H-Mh-Rxh"/>
+                                    <constraint firstItem="kP4-fj-RYP" firstAttribute="top" secondItem="gZ8-aJ-NFx" secondAttribute="bottom" id="fB1-Ao-WJR"/>
+                                    <constraint firstItem="YQz-lg-ucO" firstAttribute="top" secondItem="kP4-fj-RYP" secondAttribute="bottom" id="hmO-6T-SRq"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="8vR-jq-SVJ" secondAttribute="trailing" constant="-20" id="HV2-uk-dG6"/>
-                            <constraint firstItem="8vR-jq-SVJ" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="Ni0-RX-4HF"/>
-                            <constraint firstItem="8vR-jq-SVJ" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" id="cXc-JR-tMd"/>
-                            <constraint firstItem="KZW-cB-eQp" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.09" id="eFP-eD-GNk"/>
-                            <constraint firstItem="M3R-OD-ckZ" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.74" id="eZA-va-Zab"/>
-                            <constraint firstItem="pbP-9R-IV8" firstAttribute="top" secondItem="8vR-jq-SVJ" secondAttribute="bottom" id="iyQ-6E-14m"/>
-                            <constraint firstItem="4C9-us-veh" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.16" id="yfh-9c-tSh"/>
-                            <constraint firstItem="8vR-jq-SVJ" firstAttribute="top" secondItem="wFI-J6-5n5" secondAttribute="bottom" id="zsC-KT-nLI"/>
+                            <constraint firstItem="Zzb-9b-Teg" firstAttribute="bottom" secondItem="3i8-IG-3XL" secondAttribute="bottomMargin" id="2Su-sU-Lxa"/>
+                            <constraint firstItem="Zzb-9b-Teg" firstAttribute="top" secondItem="3i8-IG-3XL" secondAttribute="topMargin" id="5O3-N0-ZXE"/>
+                            <constraint firstItem="M3R-OD-ckZ" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="7By-Yg-IeP"/>
+                            <constraint firstItem="KZW-cB-eQp" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="7Nd-ED-28A"/>
+                            <constraint firstItem="4C9-us-veh" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="9d5-9a-Gom"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KZW-cB-eQp" secondAttribute="trailing" constant="-20" id="9ns-KV-nB8"/>
+                            <constraint firstItem="4C9-us-veh" firstAttribute="top" secondItem="3i8-IG-3XL" secondAttribute="topMargin" id="Bze-td-Byy"/>
+                            <constraint firstItem="M3R-OD-ckZ" firstAttribute="bottom" secondItem="pbP-9R-IV8" secondAttribute="top" id="H1b-cP-Ips"/>
+                            <constraint firstItem="KZW-cB-eQp" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.15" constant="-46" id="HYM-G7-LbJ"/>
+                            <constraint firstItem="KZW-cB-eQp" firstAttribute="bottom" secondItem="3i8-IG-3XL" secondAttribute="bottomMargin" id="Is9-cO-ETr"/>
+                            <constraint firstItem="Zzb-9b-Teg" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="JdI-Za-4aa"/>
+                            <constraint firstItem="M3R-OD-ckZ" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.64" constant="72" id="KFx-9x-tnG"/>
+                            <constraint firstItem="KZW-cB-eQp" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="TF0-IN-k0f"/>
+                            <constraint firstItem="YQz-lg-ucO" firstAttribute="height" secondItem="KZW-cB-eQp" secondAttribute="height" id="WJq-t4-Pyd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KZW-cB-eQp" secondAttribute="trailing" constant="-20" id="Wg2-m1-Lmf"/>
+                            <constraint firstItem="4C9-us-veh" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.21" constant="-25" id="Yk5-eG-F5N"/>
+                            <constraint firstItem="kP4-fj-RYP" firstAttribute="height" secondItem="M3R-OD-ckZ" secondAttribute="height" id="bDz-aH-bY9"/>
+                            <constraint firstItem="KZW-cB-eQp" firstAttribute="bottom" secondItem="3i8-IG-3XL" secondAttribute="bottomMargin" id="hlb-b0-pYP"/>
+                            <constraint firstItem="gZ8-aJ-NFx" firstAttribute="height" secondItem="4C9-us-veh" secondAttribute="height" id="k6z-Bl-gdj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Zzb-9b-Teg" secondAttribute="trailing" constant="-20" id="q8h-lH-bEZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="M3R-OD-ckZ" secondAttribute="trailing" constant="-20" id="uV8-um-obV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4C9-us-veh" secondAttribute="trailing" constant="-20" id="wPb-CB-0Tn"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="cXc-JR-tMd"/>
-                                <exclude reference="iyQ-6E-14m"/>
-                            </mask>
-                        </variation>
                     </view>
+                    <toolbarItems/>
+                    <connections>
+                        <outlet property="bottomView" destination="KZW-cB-eQp" id="oFh-g8-J8f"/>
+                        <outlet property="middleView" destination="M3R-OD-ckZ" id="a8m-fW-b3p"/>
+                        <outlet property="topView" destination="4C9-us-veh" id="q6v-0h-Vlz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gh3-bf-kFV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1977" y="-133"/>
+            <point key="canvasLocation" x="1977" y="-229"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="WFd-BO-bPg">
@@ -305,7 +333,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVf-9u-x0j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="213" y="-133"/>
+            <point key="canvasLocation" x="213" y="-229"/>
         </scene>
         <!--Map-->
         <scene sceneID="C5c-cP-kaL">
@@ -420,6 +448,7 @@
                             <barButtonItem image="pin1_25" id="PLm-nT-u81" userLabel="pinButton">
                                 <connections>
                                     <action selector="addPinAction:" destination="tMZ-5E-Q8W" id="mjp-Sg-pGi"/>
+                                    <segue destination="lzA-3i-fWp" kind="show" identifier="segueFromTable" id="nFk-rA-rk2"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -433,7 +462,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cbK-lk-lZs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1091" y="-133"/>
+            <point key="canvasLocation" x="1091" y="-229"/>
         </scene>
     </scenes>
     <resources>
@@ -444,4 +473,7 @@
         <image name="pin2x" width="66" height="66"/>
         <image name="udacity" width="256" height="256"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="nFk-rA-rk2"/>
+    </inferredMetricsTieBreakers>
 </document>

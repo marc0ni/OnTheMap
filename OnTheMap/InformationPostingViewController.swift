@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 class InformationPostingViewController: UIViewController, UITextFieldDelegate {
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var locationTextField: UITextField!
-    @IBOutlet weak var urlTextField: UITextField!
-    @IBOutlet weak var findMapButton: UIBarButtonItem!
+    
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var middleView: UIView!
+    @IBOutlet weak var bottomView: UIView!
     
     
     @IBAction func cancelAction(sender: AnyObject) {
