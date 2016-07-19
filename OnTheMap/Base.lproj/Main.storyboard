@@ -211,6 +211,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="c9p-Yz-eLw" userLabel="topStack">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="128"/>
+                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4C9-us-veh" userLabel="topView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -226,6 +229,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="c9p-Yz-eLw" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.21" id="D7z-i4-eES"/>
                             <constraint firstItem="M3R-OD-ckZ" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="DaV-b1-Wgh"/>
                             <constraint firstItem="4C9-us-veh" firstAttribute="top" secondItem="3i8-IG-3XL" secondAttribute="topMargin" id="Dhs-xF-ToQ"/>
                             <constraint firstItem="4C9-us-veh" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.21" constant="2" id="ElU-n4-Hte"/>
@@ -233,20 +237,18 @@
                             <constraint firstItem="KZW-cB-eQp" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="MjO-Y1-UZX"/>
                             <constraint firstItem="M3R-OD-ckZ" firstAttribute="top" secondItem="wFI-J6-5n5" secondAttribute="bottom" multiplier="0.21" constant="122.8" id="XKG-Id-xMQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KZW-cB-eQp" secondAttribute="trailing" constant="-20" id="com-OS-56s"/>
+                            <constraint firstItem="c9p-Yz-eLw" firstAttribute="top" secondItem="3i8-IG-3XL" secondAttribute="topMargin" id="d4D-oQ-KeO"/>
                             <constraint firstItem="KZW-cB-eQp" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.1466" id="h4I-wL-sBJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="M3R-OD-ckZ" secondAttribute="trailing" constant="-20" id="hn5-mQ-8mS"/>
-                            <constraint firstItem="KZW-cB-eQp" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" id="jeo-3s-0FJ"/>
-                            <constraint firstItem="pbP-9R-IV8" firstAttribute="top" secondItem="KZW-cB-eQp" secondAttribute="bottom" id="kJC-F9-JXy"/>
+                            <constraint firstItem="pbP-9R-IV8" firstAttribute="top" secondItem="KZW-cB-eQp" secondAttribute="bottom" constant="-44" id="kJC-F9-JXy"/>
                             <constraint firstItem="M3R-OD-ckZ" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.64" constant="1.5" id="sBg-zQ-Naz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4C9-us-veh" secondAttribute="trailing" constant="-20" id="uKe-Po-GKS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="c9p-Yz-eLw" secondAttribute="trailing" constant="-20" id="v0j-wo-8q5"/>
+                            <constraint firstItem="c9p-Yz-eLw" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="vR6-dq-kc1"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="jeo-3s-0FJ"/>
-                            </mask>
-                        </variation>
                     </view>
                     <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="bottomView" destination="KZW-cB-eQp" id="oFh-g8-J8f"/>
                         <outlet property="middleView" destination="M3R-OD-ckZ" id="a8m-fW-b3p"/>
