@@ -211,37 +211,63 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="c9p-Yz-eLw" userLabel="topStack">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="128"/>
-                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4C9-us-veh" userLabel="topView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3R-OD-ckZ" userLabel="middleView">
-                                <rect key="frame" x="0.0" y="127" width="600" height="385.5"/>
+                                <rect key="frame" x="0.0" y="127" width="600" height="386"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZW-cB-eQp" userLabel="bottomView">
                                 <rect key="frame" x="0.0" y="512" width="600" height="88"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="c9p-Yz-eLw" userLabel="topStack">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="126"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gqq-XV-X75">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="63"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="63" id="Ju0-hO-8lb"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
+                                        <state key="normal" title="Cancel"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="739" misplaced="YES" text="Where are you studying today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIo-wY-9WE">
+                                        <rect key="frame" x="0.0" y="67" width="600" height="25"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="751" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input a Link" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5hZ-dW-JnP" userLabel="Input a Link ">
+                                        <rect key="frame" x="0.0" y="96" width="600" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="keyPath">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="c9p-Yz-eLw" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.21" id="D7z-i4-eES"/>
-                            <constraint firstItem="M3R-OD-ckZ" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="DaV-b1-Wgh"/>
                             <constraint firstItem="4C9-us-veh" firstAttribute="top" secondItem="3i8-IG-3XL" secondAttribute="topMargin" id="Dhs-xF-ToQ"/>
                             <constraint firstItem="4C9-us-veh" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.21" constant="2" id="ElU-n4-Hte"/>
                             <constraint firstItem="4C9-us-veh" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="JPQ-gm-XWU"/>
                             <constraint firstItem="KZW-cB-eQp" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="MjO-Y1-UZX"/>
-                            <constraint firstItem="M3R-OD-ckZ" firstAttribute="top" secondItem="wFI-J6-5n5" secondAttribute="bottom" multiplier="0.21" constant="122.8" id="XKG-Id-xMQ"/>
+                            <constraint firstItem="M3R-OD-ckZ" firstAttribute="leading" secondItem="KZW-cB-eQp" secondAttribute="leading" id="Sl3-GB-DfG"/>
+                            <constraint firstItem="pbP-9R-IV8" firstAttribute="top" secondItem="M3R-OD-ckZ" secondAttribute="bottom" constant="43" id="Vkx-U6-jUH"/>
+                            <constraint firstItem="M3R-OD-ckZ" firstAttribute="top" secondItem="c9p-Yz-eLw" secondAttribute="bottom" constant="1" id="b2z-Tc-kAp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KZW-cB-eQp" secondAttribute="trailing" constant="-20" id="com-OS-56s"/>
                             <constraint firstItem="c9p-Yz-eLw" firstAttribute="top" secondItem="3i8-IG-3XL" secondAttribute="topMargin" id="d4D-oQ-KeO"/>
+                            <constraint firstItem="M3R-OD-ckZ" firstAttribute="trailing" secondItem="KZW-cB-eQp" secondAttribute="trailing" id="gJ7-Ii-bT9"/>
                             <constraint firstItem="KZW-cB-eQp" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.1466" id="h4I-wL-sBJ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="M3R-OD-ckZ" secondAttribute="trailing" constant="-20" id="hn5-mQ-8mS"/>
                             <constraint firstItem="pbP-9R-IV8" firstAttribute="top" secondItem="KZW-cB-eQp" secondAttribute="bottom" constant="-44" id="kJC-F9-JXy"/>
-                            <constraint firstItem="M3R-OD-ckZ" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.64" constant="1.5" id="sBg-zQ-Naz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4C9-us-veh" secondAttribute="trailing" constant="-20" id="uKe-Po-GKS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="c9p-Yz-eLw" secondAttribute="trailing" constant="-20" id="v0j-wo-8q5"/>
                             <constraint firstItem="c9p-Yz-eLw" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="vR6-dq-kc1"/>
