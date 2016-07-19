@@ -242,6 +242,7 @@
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="751" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input a Link" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5hZ-dW-JnP" userLabel="Input a Link ">
                                         <rect key="frame" x="0.0" y="96" width="600" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <userDefinedRuntimeAttributes>
@@ -252,16 +253,48 @@
                                     </textField>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="IBq-3d-9wE" userLabel="middleStack">
+                                <rect key="frame" x="0.0" y="92" width="600" height="417"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KB2-Dg-ca9">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="417"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input a URL" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IAq-qc-hfI">
+                                                <rect key="frame" x="0.0" y="31" width="600" height="30"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="keyPath">
+                                                        <color key="value" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="KB2-Dg-ca9" firstAttribute="top" secondItem="IBq-3d-9wE" secondAttribute="top" id="K8Q-4L-twP"/>
+                                    <constraint firstAttribute="bottom" secondItem="KB2-Dg-ca9" secondAttribute="bottom" id="Mma-RK-9hq"/>
+                                    <constraint firstItem="KB2-Dg-ca9" firstAttribute="leading" secondItem="IBq-3d-9wE" secondAttribute="leading" id="cCb-3C-8aJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="KB2-Dg-ca9" secondAttribute="trailing" id="ubC-nX-gN6"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="c9p-Yz-eLw" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.21" id="D7z-i4-eES"/>
                             <constraint firstItem="4C9-us-veh" firstAttribute="top" secondItem="3i8-IG-3XL" secondAttribute="topMargin" id="Dhs-xF-ToQ"/>
                             <constraint firstItem="4C9-us-veh" firstAttribute="height" secondItem="3i8-IG-3XL" secondAttribute="height" multiplier="0.21" constant="2" id="ElU-n4-Hte"/>
+                            <constraint firstItem="IBq-3d-9wE" firstAttribute="leading" secondItem="M3R-OD-ckZ" secondAttribute="leading" id="HSY-jb-3Pw"/>
                             <constraint firstItem="4C9-us-veh" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="JPQ-gm-XWU"/>
                             <constraint firstItem="KZW-cB-eQp" firstAttribute="leading" secondItem="3i8-IG-3XL" secondAttribute="leadingMargin" constant="-20" id="MjO-Y1-UZX"/>
+                            <constraint firstItem="IBq-3d-9wE" firstAttribute="centerY" secondItem="3i8-IG-3XL" secondAttribute="centerY" id="P4N-Da-o41"/>
+                            <constraint firstItem="KZW-cB-eQp" firstAttribute="top" secondItem="IBq-3d-9wE" secondAttribute="bottom" constant="3" id="Q5m-fH-B90"/>
                             <constraint firstItem="M3R-OD-ckZ" firstAttribute="leading" secondItem="KZW-cB-eQp" secondAttribute="leading" id="Sl3-GB-DfG"/>
                             <constraint firstItem="pbP-9R-IV8" firstAttribute="top" secondItem="M3R-OD-ckZ" secondAttribute="bottom" constant="43" id="Vkx-U6-jUH"/>
+                            <constraint firstItem="IBq-3d-9wE" firstAttribute="trailing" secondItem="M3R-OD-ckZ" secondAttribute="trailing" id="WqY-G9-ZAv"/>
                             <constraint firstItem="M3R-OD-ckZ" firstAttribute="top" secondItem="c9p-Yz-eLw" secondAttribute="bottom" constant="1" id="b2z-Tc-kAp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KZW-cB-eQp" secondAttribute="trailing" constant="-20" id="com-OS-56s"/>
                             <constraint firstItem="c9p-Yz-eLw" firstAttribute="top" secondItem="3i8-IG-3XL" secondAttribute="topMargin" id="d4D-oQ-KeO"/>
