@@ -14,7 +14,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var addPinButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
-    weak var delegate: PushViewControllerDelegate?
+    
     
     
     // The map. See the setup in the Storyboard file. Note particularly that the view controller
@@ -169,8 +169,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func addPinAction(sender: UIBarButtonItem) {
-        let infoVC = self.storyboard?.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController!
-        self.delegate?.pushViewController(infoVC)
+        let infoVC:InformationPostingViewController = self.storyboard!.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
+        presentViewController(infoVC, animated: true, completion: nil)
     }
     
     @IBAction func refreshAction(sender: AnyObject) {

@@ -9,12 +9,10 @@
 import UIKit
 import MapKit
 
-protocol PushViewControllerDelegate: class {
-    func pushViewController(vc: InformationPostingViewController)
-}
+
 
 class StudentListTableViewController: UITableViewController {
-    weak var delegate: PushViewControllerDelegate?
+    
     
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     @IBOutlet weak var addPinButton: UIBarButtonItem!
@@ -24,7 +22,8 @@ class StudentListTableViewController: UITableViewController {
     var students: [Student]! {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).students
     }
-        
+    
+    
     
     // MARK: - Table view data source
     
@@ -51,29 +50,15 @@ class StudentListTableViewController: UITableViewController {
         return cell
     }
     
-    /*override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let detailController:DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
-        detailController.meme = memes[indexPath.row] as Meme
-        navigationController!.pushViewController(detailController, animated: true)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "segueFromTable") {
-            tabBarController!.tabBar.hidden = true
-        }
-    }*/
-
-
-    
-    
     
     //MARK - Actions
     @IBAction func logoutAction(sender: AnyObject) {
     }
     
     @IBAction func addPinAction(sender: AnyObject) {
-        let infoVC = self.storyboard?.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController!
-        self.delegate!.pushViewController(infoVC)
+       
+        let infoVC:InformationPostingViewController = self.storyboard!.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
+        presentViewController(infoVC, animated: true, completion: nil)
     }
     
     @IBAction func refreshAction(sender: AnyObject) {
