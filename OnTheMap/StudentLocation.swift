@@ -22,20 +22,20 @@ struct StudentLocation {
     // MARK: Initializers
     
     init(dictionary: [String:AnyObject]) {
-        objectId = dictionary[ParseClient.JSONResponseKeys.objectId] as? String ?? ""
+        objectId = dictionary[ParseClient.JSONResponseKeys.ObjectID] as? String ?? ""
         
         // student data
-        let uniqueKey = dictionary[ParseClient.JSONResponseKeys.uniqueKey] as? String ?? ParseClient.DefaultValues.ObjectID
-        let firstName = dictionary[ParseClient.JSONResponseKeys.firstName] as? String ?? ParseClient.DefaultValues.FirstName
-        let lastName = dictionary[ParseClient.JSONResponseKeys.lastName] as? String ?? ParseClient.DefaultValues.LastName
-        let mediaUrl = dictionary[ParseClient.JSONResponseKeys.mediaUrl] as? String ?? ParseClient.DefaultValues.MediaURL
+        let uniqueKey = dictionary[ParseClient.JSONResponseKeys.UniqueKey] as? String ?? ParseClient.DefaultValues.ObjectID
+        let firstName = dictionary[ParseClient.JSONResponseKeys.FirstName] as? String ?? ParseClient.DefaultValues.FirstName
+        let lastName = dictionary[ParseClient.JSONResponseKeys.LastName] as? String ?? ParseClient.DefaultValues.LastName
+        let mediaUrl = dictionary[ParseClient.JSONResponseKeys.MediaURL] as? String ?? ParseClient.DefaultValues.MediaURL
         student = Student(uniqueKey: uniqueKey, firstName: firstName, lastName: lastName, mediaUrl: mediaUrl)
         
         // location data
         let latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as? Double ?? 0.0
         let longitude = dictionary[ParseClient.JSONResponseKeys.Longitude] as? Double ?? 0.0
-        let mapString = dictionary[ParseClient.JSONResponseKeys.mapString] as? String ?? ParseClient.DefaultValues.MapString
-        location = Location(latitude: latitude, longitude: longitude, mapstring: mapString)
+        let mapString = dictionary[ParseClient.JSONResponseKeys.MapString] as? String ?? ParseClient.DefaultValues.MapString
+        location = Location(latitude: latitude, longitude: longitude, mapString: mapString)
     }
     
     init(student: Student, location: Location) {
@@ -49,5 +49,16 @@ struct StudentLocation {
         self.student = student
         self.location = location
     }
+    
+    // MARK: Convenience "Initializers"
+    
+    static func locationsFromDictionaries(dictionaries: [[String:AnyObject]]) -> [StudentLocation] {
+        var studentLocations = [StudentLocation]()
+        for studentDictionary in dictionaries {
+            studentLocations.append(StudentLocation(dictionary: studentDictionary))
+        }
+        return studentLocations
+    }
+
 
 }

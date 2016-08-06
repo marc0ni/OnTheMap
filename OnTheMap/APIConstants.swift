@@ -6,33 +6,13 @@
 //  Copyright © 2016 udacity. All rights reserved.
 //
 
+ // Copiedfrom https://github.com/jarrodparkes/ios-on-the-map
 extension APISession {
     
-    // MARK: Constants
-    struct Constants {
-        
-        // MARK: API Key
-        static let ApiKey : String = "YOUR_API_KEY_HERE"
-        
-        // MARK: URLs
-        static let ApiScheme = "https"
-        static let ApiHost = "host"
-        static let ApiPath = "path"
-        static let ApiQuery : String = "query"
+    struct Errors {
+        static let Domain = "APISession"
+        static let UnsuccessfulResponse = "Unsuccessful response."
     }
-    
-    // MARK: Parameter Keys
-    struct ParameterKeys {
-        static let ApiScheme = "apischeme"
-        static let ApiHost = "apihost"
-        static let ApiPath = "apipath"
-        static let ApiQuery : String = "apiquery"
-    }
-    
-    // MARK: JSON Body Keys
-    struct JSONBodyKeys {
-        static let MediaType = "media_type"
-        static let MediaID = "media_id"
-    }
-    
 }
+    
+

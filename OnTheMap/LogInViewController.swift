@@ -19,31 +19,23 @@ class LogInViewController: UIViewController {
     
     // MARK: Properties
     
-    var keyboardOnScreen = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        subscribeToNotification(UIKeyboardWillShowNotification, selector: #selector(keyboardWillShow))
-        subscribeToNotification(UIKeyboardWillHideNotification, selector: #selector(keyboardWillHide))
-        subscribeToNotification(UIKeyboardDidShowNotification, selector: #selector(keyboardDidShow))
-        subscribeToNotification(UIKeyboardDidHideNotification, selector: #selector(keyboardDidHide))
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        unsubscribeFromAllNotifications()
+
     }
-
-
-       // MARK - Actions
-    @IBAction func logInAction(sender: UIButton) {
-        let username = self.emailTextField.text
-        let password = self.passwordTextField.text
     
-        if username!.characters.count < 1 || password!.characters.count < 1 {
+    // MARK - Actions
+    @IBAction func logInAction(sender: UIButton) {
+        let username = emailTextField.text
+        let password = passwordTextField.text
+    
+        if username!.isEmpty || password!.isEmpty {
             // create the login alert
-            let alert = UIAlertController(title: "Log In Alert", message: "Log in requires username and password", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Invalid", message: "Log in requires username and password", preferredStyle: UIAlertControllerStyle.Alert)
             
             // add an action (button)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -55,13 +47,27 @@ class LogInViewController: UIViewController {
         }
     }
     
-
-
-    private func completeLogin() {
-        /*let controller = storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-            presentViewController(controller, animated: true, completion: nil)*/
+    /*private func completeLogin() {
+        let request = NSMutableURLRequest(URL: NSURL(string:"https://www.udacity.com/api/session")!)
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField:"Accept")
+        request.addValue("application/json", forHTTPHeaderField:"Content-Type")
+        request.HTTPBody = "{\"udacity\":{\"username\":\"account@domain.com\", \"password\": \"********\"}}".dataUsingEncoding(NSUTF8StringEncoding)
+        let session = NSURLSession.sharedSession()
+        
+        let task = session.dataTaskWithRequest(request){data, response, error in
+            if error != nil {
+                //Handle error...
+                return
+            }
+            
+            let newData = data?.subdataWithRange(NSMakeRange(5, data.length -5)) /* subset response data! */
+        }
+        task.resume()
+    
+        
         performSegueWithIdentifier("TabBarSegue", sender: "loginButton")
-    }
+    }*/
 
 
     
@@ -69,81 +75,25 @@ class LogInViewController: UIViewController {
         let webController = WebViewController()
         webController.modalPresentationStyle = .OverCurrentContext
         presentViewController(webController, animated: true, completion: nil)
-    }    
-    
-    func userDidTapView(sender: AnyObject) {
-        resignIfFirstResponder(emailTextField)
-        resignIfFirstResponder(passwordTextField)
     }
 }
 
 
 
-// MARK: - ViewController (Notifications)
+// MARK: - Spacer for TextFields
 
-extension LogInViewController {
-    
-    private func subscribeToNotification(notification: String, selector: Selector) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: selector, name: notification, object: nil)
-    }
-    
-    private func unsubscribeFromAllNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-}
-
-// MARK: - ViewController: UITextFieldDelegate
-
-extension LogInViewController: UITextFieldDelegate {
-    
-    // MARK: UITextFieldDelegate
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    // MARK: Show/Hide Keyboard
-    
-    func keyboardWillShow(notification: NSNotification) {
-        if !keyboardOnScreen {
-            view.frame.origin.y -= keyboardHeight(notification)
-        }
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        if keyboardOnScreen {
-            view.frame.origin.y += keyboardHeight(notification)
-        }
-    }
-    
-    func keyboardDidShow(notification: NSNotification) {
-        keyboardOnScreen = true
-    }
-    
-    func keyboardDidHide(notification: NSNotification) {
-        keyboardOnScreen = false
-    }
-    
-    private func keyboardHeight(notification: NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.CGRectValue().height
-    }
-    
-    private func resignIfFirstResponder(textField: UITextField) {
-        if textField.isFirstResponder() {
-            textField.resignFirstResponder()
+public extension UITextField {
+    @IBInspectable public var leftSpacer:CGFloat {
+        get {
+            if let l = leftView {
+                return l.frame.size.width
+            } else {
+                return 0
+            }
+        } set {
+            leftViewMode = .Always
+            leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: frame.size.height))
         }
     }
 }
-
-extension NSLayoutConstraint {
-    
-    override public var description: String {
-        let id = identifier ?? ""
-        return "id: \(id), constant: \(constant)" //you may print whatever you want here
-    }
-}
-
 

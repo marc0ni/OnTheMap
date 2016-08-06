@@ -9,71 +9,107 @@
 
 import Foundation
 
+enum HTTPMethod:String {
+    case GET, POST, PUT, DELETE
+}
+
+struct APIData {
+    let scheme:String
+    let host: String
+    let path: String
+    let domain: String
+}
+
+
 class APISession : NSObject {
 
     // MARK: Properties
+    private let session: NSURLSession
+    private let apiData:APIData
     
-    // shared session
-    var session = NSURLSession.sharedSession()
-    
-    // configuration object
-    //var config = TMDBConfig()
-    
+
     // MARK: Initializers
     
-    override init() {
-        super.init()
-    }
-
-    // MARK: Helpers
-    
-    // substitute the key for the value that is contained within the method name
-    func subtituteKeyInMethod(method: String, key: String, value: String) -> String? {
-        if method.rangeOfString("{\(key)}") != nil {
-            return method.stringByReplacingOccurrencesOfString("{\(key)}", withString: value)
-        } else {
-            return nil
-        }
-    }
-    
-    // given raw JSON, return a usable Foundation object
-    private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
+    init(apiData:APIData) {
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         
-        var parsedResult: AnyObject!
-        do {
-            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-        } catch {
-            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+        self.session = NSURLSession(configuration: configuration)
+        self.apiData = apiData
+    }
+    
+    
+    // Reconstructed from https://github.com/jarrodparkes/ios-on-the-map
+    func makeRequestAtURL(url:NSURL, method: HTTPMethod, headers: [String:String]? = nil, body: [String:AnyObject]? = nil, responseHandler: (NSData?, NSError?) -> Void) {
+        
+        let request = NSMutableURLRequest(URL:url)
+        request.HTTPMethod = method.rawValue
+        
+        if let headers = headers {
+            for (key, value) in headers {
+                request.addValue(value, forHTTPHeaderField: key)
+            }
         }
         
-        completionHandlerForConvertData(result: parsedResult, error: nil)
+        if let body = body {
+            request.HTTPBody = try!NSJSONSerialization.dataWithJSONObject(body, options: NSJSONWritingOptions())
+        }
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            
+            if let error = error {
+                responseHandler(nil, error)
+                return
+            }
+        
+            /* GUARD: Did we get a successful 2XX response? */
+            if let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 {
+                
+                let userInfo = [
+                    NSLocalizedDescriptionKey: Errors.UnsuccessfulResponse
+                ]
+                let error = NSError(domain: Errors.Domain, code: statusCode, userInfo: userInfo)
+                responseHandler(nil, error)
+                return
+            }
+        }
+        task.resume()
     }
     
-    // create a URL from parameters
-    private func APIURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
-        
+    
+    // Reconstructed from https://github.com/jarrodparkes/ios-on-the-map
+    func urlForMethod(method: String?, withPathExtension: String? = nil, parameters: [String:AnyObject]? = nil) -> NSURL {
         let components = NSURLComponents()
-        components.scheme = APISession.Constants.ApiScheme
-        components.host = APISession.Constants.ApiHost
-        components.path = APISession.Constants.ApiPath + (withPathExtension ?? "")
-        components.queryItems = [NSURLQueryItem]()
+        components.scheme = apiData.scheme
+        components.host = apiData.host
+        components.path = apiData.path
         
-        for (key, value) in parameters {
-            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
-            components.queryItems!.append(queryItem)
+        if let parameters = parameters {
+            components.queryItems = [NSURLQueryItem]()
+            for (key, value) in parameters {
+                let queryItem = NSURLQueryItem(name: key, value: "\(value)")
+                components.queryItems!.append(queryItem)
+            }
         }
         
         return components.URL!
     }
     
-    // MARK: Shared Instance
-    
-    class func sharedInstance() -> APISession {
-        struct Singleton {
-            static var sharedInstance = APISession()
+    // Copiedfrom https://github.com/jarrodparkes/ios-on-the-map
+    func cookieForName(name: String) -> NSHTTPCookie? {
+        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == name {
+                return cookie
+            }
         }
-        return Singleton.sharedInstance
+        return nil
     }
-}
+    
+    
+    // Copiedfrom https://github.com/jarrodparkes/ios-on-the-map
+    func errorWithStatus(status: Int, description: String) -> NSError {
+        let userInfo = [NSLocalizedDescriptionKey: description]
+        return NSError(domain: apiData.domain, code: status, userInfo: userInfo)
+    }
 
+}

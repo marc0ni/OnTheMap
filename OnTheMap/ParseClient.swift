@@ -8,122 +8,182 @@
 
 import Foundation
 
-class ParseClient : NSObject {
+// MARK: - ParseClient
 
+class ParseClient {
+    
     // MARK: Properties
     
-    // shared session
-    var session = NSURLSession.sharedSession()
+    let apiSession: APISession
     
+    // MARK: Initializer
     
-    // MARK: Initializers
-    
-    override init() {
-        super.init()
+    init() {
+        let apiData = APIData(scheme: Components.Scheme, host: Components.Host, path: Components.Path, domain: Errors.Domain)
+        apiSession = APISession(apiData: apiData)
     }
     
-    // MARK: GET
+    // MARK: Singleton Instance
     
-    func taskForGETStudentLocations(method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    private static var sharedInstance = ParseClient()
+    
+    class func sharedClient() -> ParseClient {
+        return sharedInstance
+    }
+    
+    // MARK: Make Request
+    
+    private func makeRequestForParse(url url: NSURL, method: HTTPMethod, body: [String:AnyObject]? = nil, responseHandler: (jsonAsDictionary: [String:AnyObject]?, error: NSError?) -> Void) {
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            
-            func sendError(error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(result: nil, error: NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+        let headers = [
+            HeaderKeys.AppId: HeaderValues.AppId,
+            HeaderKeys.APIKey: HeaderValues.APIKey,
+            HeaderKeys.Accept: HeaderValues.JSON,
+            HeaderKeys.ContentType: HeaderValues.JSON
+        ]
+        
+        apiSession.makeRequestAtURL(url, method: method, headers: headers, body: body) { (data, error) in
+            if let data = data {
+                let jsonAsDictionary = try! NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as! [String:AnyObject]
+                responseHandler(jsonAsDictionary: jsonAsDictionary, error: nil)
+            } else {
+                responseHandler(jsonAsDictionary: nil, error: error)
             }
+        }
+    }
+    
+    // MARK: GET Student Location
+    
+    func studentLocationWithUserKey(userKey: String, completionHandler: (location: StudentLocation?, error: NSError?) -> Void) {
+        
+        let studentLocationURL = apiSession.urlForMethod(Objects.StudentLocation, parameters: [
+            ParameterKeys.Where: "{\"\(ParameterKeys.UniqueKey)\":\"" + "\(userKey)" + "\"}"
+            ])
+        
+        makeRequestForParse(url: studentLocationURL, method: .GET) { (jsonAsDictionary, error) in
             
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+            guard error == nil else {
+                completionHandler(location: nil, error: error)
                 return
             }
             
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode
-                >= 200 && statusCode <= 299 else {
-                    sendError("Your request returned a status code other than 2xx!")
+            if let jsonAsDictionary = jsonAsDictionary,
+                let studentDictionaries = jsonAsDictionary[JSONResponseKeys.Results] as? [[String:AnyObject]] {
+                if studentDictionaries.count == 1 {
+                    completionHandler(location: StudentLocation(dictionary: studentDictionaries[0]), error: nil)
                     return
+                }
             }
             
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            print(NSString(data: data, encoding: NSUTF8StringEncoding))
+            completionHandler(location: nil, error: self.apiSession.errorWithStatus(0, description: Errors.NoRecordAtKey))
         }
-        
-        task.resume()
-        return task
-    }
-
-    
-    // MARK: POST
-    
-    func taskForPOSTStudentLocation(method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
-        
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
-        request.HTTPMethod = "POST"
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            
-            func sendError(error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(result: nil, error: NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
-            }
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
-                return
-            }
-            
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
-        }
-        
-        /* 7. Start the request */
-        task.resume()
-        
-        return task
     }
     
+    // MARK: GET Student Locations
     
-    // given raw JSON, return a usable Foundation object
-    private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
+    func studentLocations(completionHandler: (locations: [StudentLocation]?, error: NSError?) -> Void) {
         
-        var parsedResult: AnyObject!
-        do {
-            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-        } catch {
-            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+        let studentLocationURL = apiSession.urlForMethod(Objects.StudentLocation, parameters: [
+            ParameterKeys.Limit: ParameterValues.OneHundred,
+            ParameterKeys.Order: ParameterValues.MostRecentlyUpdated
+            ])
+        
+        makeRequestForParse(url: studentLocationURL, method: .GET) { (jsonAsDictionary, error) in
+            
+            guard error == nil else {
+                completionHandler(locations: nil, error: error)
+                return
+            }
+            
+            if let jsonAsDictionary = jsonAsDictionary,
+                let studentDictionaries = jsonAsDictionary[JSONResponseKeys.Results] as? [[String:AnyObject]] {
+                completionHandler(locations: StudentLocation.locationsFromDictionaries(studentDictionaries), error: nil)
+                return
+            }
+            
+            completionHandler(locations: nil, error: self.apiSession.errorWithStatus(0, description: Errors.NoRecords))
         }
+    }
+    
+    // MARK: POST Student Location
+    
+    func postStudentLocation(mediaURL: String, studentLocation: StudentLocation, completionHandler: (success: Bool, error: NSError?) -> Void) {
         
-        completionHandlerForConvertData(result: parsedResult, error: nil)
+        let studentLocationURL = apiSession.urlForMethod(Objects.StudentLocation)
+        let studentLocationBody: [String:AnyObject] = [
+            BodyKeys.UniqueKey: studentLocation.student.uniqueKey,
+            BodyKeys.FirstName: studentLocation.student.firstName,
+            BodyKeys.LastName: studentLocation.student.lastName,
+            BodyKeys.MapString: studentLocation.location.mapString!,
+            BodyKeys.MediaURL: mediaURL,
+            BodyKeys.Latitude: studentLocation.location.latitude,
+            BodyKeys.Longitude: studentLocation.location.longitude
+        ]
+        
+        makeRequestForParse(url: studentLocationURL, method: .POST, body: studentLocationBody) { (jsonAsDictionary, error) in
+            
+            guard error == nil else {
+                completionHandler(success: false, error: error)
+                return
+            }
+            
+            // success
+            if let jsonAsDictionary = jsonAsDictionary,
+                let _ = jsonAsDictionary[JSONResponseKeys.ObjectID] as? String {
+                completionHandler(success: true, error: nil)
+                return
+            }
+            
+            // known failure
+            if let jsonAsDictionary = jsonAsDictionary,
+                let error = jsonAsDictionary[JSONResponseKeys.Error] as? String {
+                completionHandler(success: true, error: self.apiSession.errorWithStatus(0, description: error))
+                return
+            }
+            
+            // unknown failure
+            completionHandler(success: false, error: self.apiSession.errorWithStatus(0, description: Errors.CouldNotPostLocation))
+        }
+    }
+    
+    // MARK: PUT Student Location
+    
+    func updateStudentLocationWithObjectID(objectID: String, mediaURL: String, studentLocation: StudentLocation, completionHandler: (success: Bool, error: NSError?) -> Void) {
+        
+        let studentLocationURL = apiSession.urlForMethod(Objects.StudentLocation, withPathExtension: "/\(objectID)")
+        let studentLocationBody: [String:AnyObject] = [
+            BodyKeys.UniqueKey: studentLocation.student.uniqueKey,
+            BodyKeys.FirstName: studentLocation.student.firstName,
+            BodyKeys.LastName: studentLocation.student.lastName,
+            BodyKeys.MapString: studentLocation.location.mapString!,
+            BodyKeys.MediaURL: mediaURL,
+            BodyKeys.Latitude: studentLocation.location.latitude,
+            BodyKeys.Longitude: studentLocation.location.longitude
+        ]
+        
+        makeRequestForParse(url: studentLocationURL, method: .PUT, body: studentLocationBody) { (jsonAsDictionary, error) in
+            
+            guard error == nil else {
+                completionHandler(success: false, error: error)
+                return
+            }
+            
+            // success
+            if let jsonAsDictionary = jsonAsDictionary,
+                let _ = jsonAsDictionary[JSONResponseKeys.UpdatedAt] {
+                completionHandler(success: true, error: nil)
+                return
+            }
+            
+            // known failure
+            if let jsonAsDictionary = jsonAsDictionary,
+                let error = jsonAsDictionary[JSONResponseKeys.Error] as? String {
+                completionHandler(success: true, error: self.apiSession.errorWithStatus(0, description: error))
+                return
+            }
+            
+            // unknown failure
+            completionHandler(success: false, error: self.apiSession.errorWithStatus(0, description: Errors.CouldNotUpdateLocation))
+        }
     }
 }

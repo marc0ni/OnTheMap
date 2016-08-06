@@ -10,9 +10,6 @@ import Foundation
 import UIKit
 import MapKit
 
-/*protocol PushInformationPostingDelegate {
-    func controller(controller: InformationPostingViewController)
-}*/
 
 class InformationPostingViewController: UIViewController, MKMapViewDelegate , UITextFieldDelegate {
     @IBOutlet weak var topView: UIView!
@@ -26,7 +23,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate , UI
     
     @IBOutlet weak var findMapButton: UIButton!
     @IBOutlet weak var selectMapButton: UIButton!
-    //var delegate: PushInformationPostingDelegate?
+    
     
     
     @IBAction func cancelAction(sender: AnyObject) {

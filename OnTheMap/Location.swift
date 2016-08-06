@@ -17,7 +17,7 @@ struct Location {
     
     let latitude: Double
     let longitude: Double
-    let mapstring: String?
+    let mapString: String?
     
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2DMake(latitude, longitude)
