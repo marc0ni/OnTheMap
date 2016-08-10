@@ -11,6 +11,10 @@ import UIKit
 import WebKit
 
 class LogInViewController: UIViewController {
+    
+    private let udacityClient = UdacityClient.sharedClient()
+    
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
@@ -29,7 +33,7 @@ class LogInViewController: UIViewController {
     }
     
     // MARK - Actions
-    @IBAction func logInAction(sender: UIButton) {
+    @IBAction func logInAction(sender: AnyObject) {
         let username = emailTextField.text
         let password = passwordTextField.text
     
@@ -43,38 +47,36 @@ class LogInViewController: UIViewController {
             // show the alert
             self.presentViewController(alert, animated: true, completion: nil)
         } else {
-            completeLogin()
+            udacityClient.loginWithUsername(emailTextField.text!, password: passwordTextField.text!) { (userKey, error) in
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let userKey = userKey {
+                        self.getStudentWithUserKey(userKey)
+                    } else {
+                        self.alertWithError(error!.localizedDescription)
+                    }
+                }
+            }
         }
     }
     
-    /*private func completeLogin() {
-        let request = NSMutableURLRequest(URL: NSURL(string:"https://www.udacity.com/api/session")!)
-        request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField:"Accept")
-        request.addValue("application/json", forHTTPHeaderField:"Content-Type")
-        request.HTTPBody = "{\"udacity\":{\"username\":\"account@domain.com\", \"password\": \"********\"}}".dataUsingEncoding(NSUTF8StringEncoding)
-        let session = NSURLSession.sharedSession()
-        
-        let task = session.dataTaskWithRequest(request){data, response, error in
-            if error != nil {
-                //Handle error...
-                return
-            }
-            
-            let newData = data?.subdataWithRange(NSMakeRange(5, data.length -5)) /* subset response data! */
-        }
-        task.resume()
-    
-        
-        performSegueWithIdentifier("TabBarSegue", sender: "loginButton")
-    }*/
-
-
     
     @IBAction func signUpAction(sender: UIButton) {
         let webController = WebViewController()
         webController.modalPresentationStyle = .OverCurrentContext
         presentViewController(webController, animated: true, completion: nil)
+    }
+    
+    
+    private func getStudentWithUserKey(userKey: String) {
+        udacityClient.studentWithUserKey(userKey) { (student, error) in
+            dispatch_async(dispatch_get_main_queue()) {
+            if let student = student {
+                self.DataSource.currentStudent = student
+                self.login()
+            } else {
+                self.rejectWithError(error!.localizedDescription)
+            }
+        }
     }
 }
 

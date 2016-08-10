@@ -12,8 +12,8 @@ extension ParseClient {
         // MARK: Components
     struct Components {
         static let Scheme = "https"
-        static let Host = "api.parse.com"
-        static let Path = "/1/classes"
+        static let Host = "parse.udacity.com"
+        static let Path = "/parse/classes"
     }
 
     // MARK: Errors
