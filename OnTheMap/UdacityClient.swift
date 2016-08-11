@@ -32,7 +32,10 @@ class UdacityClient {
     
     // MARK: Make Request
     
-    private func makeRequestForUdacity() -> Void) {
+    private func makeRequestForUdacity(url:NSURL, method:HTTPMethod, headers:[String:String]? = nil, body:[String:AnyObject]? = nil, responseHandler:(NSData?, NSError?) -> Void) {
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = method.rawValue
         
         var allHeaders = [
     
