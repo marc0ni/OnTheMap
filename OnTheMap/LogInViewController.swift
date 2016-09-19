@@ -13,18 +13,22 @@ import WebKit
 class LogInViewController: UIViewController {
     
     private let udacityClient = UdacityClient.sharedClient()
+    private let otmDataSource = OTMDataSource.sharedDataSource()
     
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
     // MARK: Properties
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
+         activityIndicator.hidden = true
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -34,10 +38,8 @@ class LogInViewController: UIViewController {
     
     // MARK - Actions
     @IBAction func logInAction(sender: AnyObject) {
-        let username = emailTextField.text
-        let password = passwordTextField.text
-    
-        if username!.isEmpty || password!.isEmpty {
+        
+        if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             // create the login alert
             let alert = UIAlertController(title: "Invalid", message: "Log in requires username and password", preferredStyle: UIAlertControllerStyle.Alert)
             
@@ -47,12 +49,20 @@ class LogInViewController: UIViewController {
             // show the alert
             self.presentViewController(alert, animated: true, completion: nil)
         } else {
+            activityIndicator.hidden = false
+            activityIndicator.stopAnimating()
             udacityClient.loginWithUsername(emailTextField.text!, password: passwordTextField.text!) { (userKey, error) in
                 dispatch_async(dispatch_get_main_queue()) {
                     if let userKey = userKey {
                         self.getStudentWithUserKey(userKey)
                     } else {
-                        self.alertWithError(error!.localizedDescription)
+                        let alert = UIAlertController(title: "Invalid", message: "Log in error", preferredStyle: UIAlertControllerStyle.Alert)
+                        
+                        // add an action (button)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        
+                        // show the alert
+                        self.presentViewController(alert, animated: true, completion: nil)
                     }
                 }
             }
@@ -71,14 +81,30 @@ class LogInViewController: UIViewController {
         udacityClient.studentWithUserKey(userKey) { (student, error) in
             dispatch_async(dispatch_get_main_queue()) {
             if let student = student {
-                self.DataSource.currentStudent = student
+                self.otmDataSource.currentStudent = student
                 self.login()
             } else {
-                self.rejectWithError(error!.localizedDescription)
+                let alert = UIAlertController(title: "Invalid", message: "Student UserKey Not Found", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                // show the alert
+                self.presentViewController(alert, animated: true, completion: nil)
+                }
             }
         }
     }
-}
+    
+    
+    private func login() {
+        performSegueWithIdentifier("login", sender: self)
+        activityIndicator.hidden = true
+        }
+    
+    }
+
+
 
 
 

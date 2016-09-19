@@ -6,7 +6,7 @@
 //  Copyright © 2016 udacity. All rights reserved.
 //
 
-import UIKit
+/*import UIKit
 import MapKit
 
 
@@ -65,4 +65,4 @@ class StudentListTableViewController: UITableViewController {
     }
    
 
-}
+}*/

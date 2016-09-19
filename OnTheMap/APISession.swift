@@ -29,6 +29,7 @@ struct APIData {
 class APISession {
     
     // MARK: Properties
+    
     private let session:NSURLSession!
     private let apiData:APIData
     
@@ -43,14 +44,18 @@ class APISession {
     }
     
     // MARK: Requests
+    /// Generalize the 7-step task process to allow slotting in URLs, methods, headers, bodies, and responseHandlers for particular sharedInstances
     
     func makeRequestAtURL(url:NSURL, method:HTTPMethod, headers:[String:String]? = nil, body:[String:AnyObject]? = nil, responseHandler:(NSData?, NSError?) -> Void) {
         
-        // create request and set HTTP method
+        /// 1. Parameters set by the sharedInstance
+        
+        /// 2. Build URL
         let request = NSMutableURLRequest(URL:url)
         request.HTTPMethod = method.rawValue
     
         
+        /// 3. Configure request
         // add headers
         if let headers = headers {
             for (key, value) in headers {
@@ -64,7 +69,7 @@ class APISession {
         }
     
         
-        // create/return task
+        /// 4. Make request
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             // was there an error?
@@ -85,9 +90,13 @@ class APISession {
              responseHandler(nil, error)
         }
         
-        /* 7. Start the request */
+        /// 5,6. Data parsed and used in sharedInstance
+        
+        ///* 7. Start the request */
         task.resume()
     }
+    
+
     
     // MARK: URLs
     

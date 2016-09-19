@@ -19,7 +19,8 @@ class UdacityClient {
     // MARK: Initializer
     
     init() {
-        
+        let apiData = APIData(scheme: Components.Scheme, host: Components.Host, path: Components.Path, domain: Errors.Domain)
+        apiSession = APISession(apiData: apiData)
     }
     
     // MARK: Singleton Instance
@@ -31,28 +32,34 @@ class UdacityClient {
     }
     
     // MARK: Make Request
-    
-    private func makeRequestForUdacity(url:NSURL, method:HTTPMethod, headers:[String:String]? = nil, body:[String:AnyObject]? = nil, responseHandler:(NSData?, NSError?) -> Void) {
+    /// Specifies the URLs, methods, headers, bodies, and responseHandlers for Udacity sharedInstances and applies them to the 7-step task process
+    private func makeRequestForUdacity(url url: NSURL, method: HTTPMethod, body: [String:AnyObject]? = nil, headers: [String:String]? = nil, responseHandler: (jsonAsDictionary: [String:AnyObject]?, error: NSError?) -> Void) {
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = method.rawValue
-        
+        /// 1. Set parameters by creating 'allHeaders' array for Parse sharedInstance
         var allHeaders = [
-    
+            HeaderKeys.Accept: HeaderValues.JSON,
+            HeaderKeys.ContentType: HeaderValues.JSON
         ]
-    
+        
+        
         if let headers = headers {
-    
+            for (key, value) in headers {
+                allHeaders[key] = value
+            }
         }
         
-        apiSession.makeRequestAtURL() { (data, error) in
+        /// 2. Build the URL in other functions
+        
+        /// 3. Use 'makeRequestAtURL' function to configure the request, 4. Make the request
+        apiSession.makeRequestAtURL(url, method: method, headers: allHeaders, body: body) { (data, error) in
             if let data = data {
-                let jsonAsDictionary = 
+                let jsonAsDictionary = try! NSJSONSerialization.JSONObjectWithData(data.subdataWithRange(NSMakeRange(5, data.length - 5)), options: .AllowFragments) as! [String:AnyObject]
                 responseHandler(jsonAsDictionary: jsonAsDictionary, error: nil)
             } else {
                 responseHandler(jsonAsDictionary: nil, error: error)
             }
         }
+         /// Complete the 7-step process (5. Parse the data, 6. Use the data, 7. Start the request) in other functions
     }
     
     // MARK: Login
@@ -61,17 +68,11 @@ class UdacityClient {
         
         let loginURL = apiSession.urlForMethod(Methods.Session)
         var loginBody = [String:AnyObject]()
-        if let facebookToken = facebookToken {
-            loginBody["facebook_mobile"] = [
-                "access_token": facebookToken
-            ]
-        } else {
-            loginBody[HTTPBodyKeys.Udacity] = [
-                HTTPBodyKeys.Username: username,
-                HTTPBodyKeys.Password: password
-            ]
-        }
-        
+        loginBody[HTTPBodyKeys.Udacity] = [
+            HTTPBodyKeys.Username: username,
+            HTTPBodyKeys.Password: password
+        ]
+    
         makeRequestForUdacity(url: loginURL, method: .POST, body: loginBody) { (jsonAsDictionary, error) in
             
             guard error == nil else {
@@ -152,7 +153,7 @@ class UdacityClient {
                 let userDictionary = jsonAsDictionary[JSONResponseKeys.User] as? [String:AnyObject],
                 let firstName = userDictionary[JSONResponseKeys.FirstName] as? String,
                 let lastName = userDictionary[JSONResponseKeys.LastName] as? String {
-                completionHandler(student: Student(uniqueKey: userKey, firstName: firstName, lastName: lastName, mediaURL: ""), error: nil)
+                completionHandler(student: Student(uniqueKey: userKey, firstName: firstName, lastName: lastName, mediaUrl: ""), error: nil)
                 return
             }
             

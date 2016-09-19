@@ -1,5 +1,5 @@
 //
-//  DataSource.swift
+//  OTMDataSource.swift
 //  OnTheMap
 //
 //  Created by Mark Lindamood on 8/9/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DataSource: NSObject {
+class OTMDataSource: NSObject {
     
     // MARK: Properties
     
@@ -24,9 +24,9 @@ class DataSource: NSObject {
     
     // MARK: Singleton Instance
     
-    private static var sharedInstance = DataSource()
+    private static var sharedInstance = OTMDataSource()
     
-    class func sharedDataSource() -> DataSource {
+    class func sharedDataSource() -> OTMDataSource {
         return sharedInstance
     }
     
@@ -39,16 +39,23 @@ class DataSource: NSObject {
     // MARK: Refresh Student Locations
     
     func refreshStudentLocations() {
-           }
+        parseClient.studentLocations { (students, error) in
+            if let _ = error {
+                self.sendDataNotification("\(ParseClient.Objects.StudentLocation)\(ParseClient.Notifications.ObjectUpdatedError)")
+            } else {
+                self.studentLocations = students!
+                self.sendDataNotification("\(ParseClient.Objects.StudentLocation)\(ParseClient.Notifications.ObjectUpdated)")
+            }
+        }
+    }
 }
 
 // MARK: - StudentLocationDataSource: UITableViewDataSource
 
-extension DataSource: UITableViewDataSource {
+extension OTMDataSource: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return studentLocations.count
-       
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -56,6 +63,7 @@ extension DataSource: UITableViewDataSource {
         let studentLocation = studentLocations[indexPath.item]
         cell.configureWithStudentLocation(studentLocation)
         return cell
-        
     }
 }
+    
+   

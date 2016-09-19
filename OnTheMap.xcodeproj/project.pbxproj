@@ -20,7 +20,7 @@
 		38A7D71D1D4E6B8500D1084F /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A7D71C1D4E6B8500D1084F /* AppConstants.swift */; };
 		38D597C71D2DECB20052A035 /* StudentLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D597C61D2DECB20052A035 /* StudentLocationTableViewCell.swift */; };
 		38D597C91D2EBE420052A035 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D597C81D2EBE420052A035 /* Student.swift */; };
-		38F42FDA1D5A6E8600E6A511 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F42FD91D5A6E8600E6A511 /* DataSource.swift */; };
+		38F42FDA1D5A6E8600E6A511 /* OTMDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F42FD91D5A6E8600E6A511 /* OTMDataSource.swift */; };
 		38F71AC01D431A52004BFCE6 /* OTMTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F71ABF1D431A52004BFCE6 /* OTMTextFieldDelegate.swift */; };
 		38F9C41D1D20636B007BD549 /* APISession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F9C41C1D20636B007BD549 /* APISession.swift */; };
 		38FD92C51D17285E003599B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FD92C41D17285E003599B3 /* AppDelegate.swift */; };
@@ -66,7 +66,7 @@
 		38A7D71C1D4E6B8500D1084F /* AppConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		38D597C61D2DECB20052A035 /* StudentLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocationTableViewCell.swift; sourceTree = "<group>"; };
 		38D597C81D2EBE420052A035 /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
-		38F42FD91D5A6E8600E6A511 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		38F42FD91D5A6E8600E6A511 /* OTMDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMDataSource.swift; sourceTree = "<group>"; };
 		38F71ABF1D431A52004BFCE6 /* OTMTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMTextFieldDelegate.swift; sourceTree = "<group>"; };
 		38F9C41C1D20636B007BD549 /* APISession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APISession.swift; sourceTree = "<group>"; };
 		38FD92C11D17285E003599B3 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,7 +150,7 @@
 		38F9C4181D1D974F007BD549 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				38F42FD91D5A6E8600E6A511 /* DataSource.swift */,
+				38F42FD91D5A6E8600E6A511 /* OTMDataSource.swift */,
 			);
 			name = DataSource;
 			sourceTree = "<group>";
@@ -378,7 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38F42FDA1D5A6E8600E6A511 /* DataSource.swift in Sources */,
+				38F42FDA1D5A6E8600E6A511 /* OTMDataSource.swift in Sources */,
 				38021F841D22FA6E00863A6E /* StudentLocation.swift in Sources */,
 				38FD92F61D172A5B003599B3 /* GCDBlackBox.swift in Sources */,
 				380DC0EB1D1B4E9E003A65FF /* UdacityConstants.swift in Sources */,
@@ -587,7 +587,8 @@
 		38FD92F31D17285E003599B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = "";
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "iOS Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mark Lindamood (LL57X8Q8P3)";
 				INFOPLIST_FILE = OnTheMapUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.OnTheMapUITests;
@@ -599,6 +600,9 @@
 		38FD92F41D17285E003599B3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "iOS Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mark Lindamood (LL57X8Q8P3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OnTheMapUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.OnTheMapUITests;
